@@ -11,15 +11,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     UsersModule, 
     TypeOrmModule.forRoot({
       type: 'postgres',
-      database: 'nestjsapp-db',
+      database: 'nestjs-app-db',
       username: 'postgres',
-      password: "Admin101##",
+      password: "Admin101",
       port: 5432,
       host: 'localhost',
       synchronize: true, //for development only
-      entities: []
+      entities: [__dirname + '/**/*.entity{.ts,.js}']
     })
-  ],
+  ]
   // exports: [],
   // controllers: [],
   // providers: [],

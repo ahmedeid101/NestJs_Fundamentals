@@ -29,17 +29,17 @@ export class ReviewsController {
   }
 
   @Get(':id')
-  public getSingleReview(@Param('id') id: string) {
+  public getSingleReview(@Param('id') id: number) {
     return this.reviewsService.getOne(id);
   }
 
   @Put(':id')
-  public updateReview(@Param('id') id: string, @Body() body: UpdateReviewsDTO) {
+  public updateReview(@Param('id') id: number, @Body() body: UpdateReviewsDTO) {
     return this.reviewsService.update(id, body);
   }
 
   @Delete(':id')
-  public deleteReview(@Param('id') id: string) {
+  public deleteReview(@Param('id') id: number) {
     return this.reviewsService.delete(id);
   }
 }

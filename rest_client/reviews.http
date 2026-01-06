@@ -3,18 +3,18 @@ POST http://localhost:3000/api/reviews
 Content-Type: application/json
 
 {
-    "rating": 10,
-    "comment": "very good"
+    "rating": 5,
+    "comment": "very nice"
 }
 
 ### Get All Reviews
 GET http://localhost:3000/api/reviews
 
 ### Get Single Review
-GET http://localhost:3000/api/reviews/1
+GET http://localhost:3000/api/reviews/2
 
 ### Update Review
-PUT  http://localhost:3000/api/reviews/4
+PUT  http://localhost:3000/api/reviews/3
 Content-Type: application/json
 
 {

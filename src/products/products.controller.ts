@@ -15,9 +15,8 @@ export class ProductsController{
 
     @Get()
     public getAllProducts(){
-        const users = this.userService.getAll()
         const products= this.productService.getAll();
-        return {products, users};
+        return products;
     }
 
     @Get(":id")
@@ -26,12 +25,12 @@ export class ProductsController{
     }
 
     @Put(":id")
-    public updateProduct(@Param("id") id:string, @Body() body: UpdateProductDTO){
+    public updateProduct(@Param("id") id:number, @Body() body: UpdateProductDTO){
         return this.productService.update(id, body);
     }
     
      @Delete(":id")
-    public deleteProduct(@Param("id") id:string){
+    public deleteProduct(@Param("id") id:number){
         return this.productService.delete(id);
     }    
 

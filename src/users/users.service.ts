@@ -1,56 +1,48 @@
 import { forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
 import { CreateUserDTO } from "src/dtos/users-dto/create-user.dto";
 import { UpdateUserDTO } from "src/dtos/users-dto/update-user.dto";
-import { ReviewsService } from "src/reviews/reviews.service";
+import { Repository } from "typeorm";
+import { User } from "./user.entity";
 
-type userType = { id: number, name: string, email: string };
 
 @Injectable()
 export class UserService {
     constructor(
-        @Inject(forwardRef(() => ReviewsService))
-        private readonly reviewsService: ReviewsService
+        @InjectRepository(User)
+        private readonly userRepository: Repository<User>
     ){}
-    private users: userType[] = [
-        { id: 1, name: "Ahmed", email: "ahmed@gmail.com" },
-        { id: 2, name: "Aly", email: "aly@gmail.com" },
-        { id: 3, name: "Ramy", email: "ramy@gmail.com" }
-    ];
+   
 
     //Create New User
-    public create({ name, email }: CreateUserDTO) {
-        const newUser: userType = {
-            id: this.users.length + 1,
-            name,
-            email
-        }
-        this.users.push(newUser);
-        return newUser;
+    public create(dto: CreateUserDTO) {
+        const newUser = this.userRepository.create(dto);
+        return this.userRepository.save(newUser);
     }
     //Get All User    
     public getAll() {
-        return this.users;
+        return this.userRepository.find();
     }
 
     //Get Single User
-    public getOne(id: string) {
-        const user = this.users.find((p) => p.id === parseInt(id));
+    public async getOne(id: number) {
+        const user = await this.userRepository.findOne({where: {id}});
         if (!user) throw new NotFoundException('user not found');
         return user;
     }
 
     //Update User
-    public update(id: string, updateUserDTO: UpdateUserDTO) {
-        const review = this.users.find((p) => p.id === parseInt(id));
-        if (!review) throw new NotFoundException('user not found');
-        console.log(updateUserDTO);
-        return { message: 'user updated successfully' };
+    public async update(id: number, dto: UpdateUserDTO) {
+        const user = await this.getOne(id);
+        user.name = dto.name ?? user.name;
+        user.email = dto.email ?? user.email;
+        return this.userRepository.save(user);
     }
 
     //Delete User
-    public delete(id: string) {
-        const user = this.users.find((p) => p.id === parseInt(id));
-        if (!user) throw new NotFoundException('user not found');
+    public async delete(id: number) {
+        const user = await this.getOne(id);
+        await this.userRepository.remove(user);
         return { message: 'user deleted successfully' };
     }
 

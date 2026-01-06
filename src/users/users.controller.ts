@@ -31,17 +31,17 @@ export class UsersController {
   }
 
   @Get(':id')
-  public getSingleUser(@Param('id') id: string) {
+  public getSingleUser(@Param('id') id: number) {
     return this.userService.getOne(id);
   }
 
   @Put(':id')
-  public updateUser(@Param('id') id: string, @Body() body: UpdateUserDTO) {
+  public updateUser(@Param('id') id: number, @Body() body: UpdateUserDTO) {
     return this.userService.update(id, body);
   }
 
   @Delete(':id')
-  public deleteUser(@Param('id') id: string) {
+  public deleteUser(@Param('id') id: number) {
     return this.userService.delete(id);
   }
 }
