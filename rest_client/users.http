@@ -3,8 +3,8 @@ POST http://localhost:3000/api/users
 Content-Type: application/json
 
 {
-    "name": "Ahmed",
-    "email": "ahmed101@gmail.com"
+    "name": "Mohammed",
+    "email": "mohammed101@gmail.com"
 }
 
 ### Get All Users
@@ -14,7 +14,7 @@ GET http://localhost:3000/api/users
 GET http://localhost:3000/api/users/1
 
 ### Update User
-PUT  http://localhost:3000/api/users/4
+PUT  http://localhost:3000/api/users/2
 Content-Type: application/json
 
 {
@@ -22,4 +22,4 @@ Content-Type: application/json
 }
 
 ### Delete User
-DELETE  http://localhost:3000/api/users/4
+DELETE  http://localhost:3000/api/users/2

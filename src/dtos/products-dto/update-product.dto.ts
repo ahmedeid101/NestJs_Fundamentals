@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsNotEmpty, Length, IsOptional, Min } from "class-validator";
+import { IsString, IsNumber, IsNotEmpty, Length, IsOptional, Min, MinLength } from "class-validator";
 
 export class UpdateProductDTO{
     @IsString()
@@ -9,6 +9,7 @@ export class UpdateProductDTO{
 
     @IsString()
     @IsOptional()
+    @MinLength(5)
     description: string;
 
     @IsNumber()
