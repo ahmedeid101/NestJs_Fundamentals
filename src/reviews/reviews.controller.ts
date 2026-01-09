@@ -10,12 +10,10 @@ import {
 import { CreateReviewsDTO } from 'src/dtos/reviews-dto/create-reviews.dto';
 import { UpdateReviewsDTO } from 'src/dtos/reviews-dto/update-reviews.dto';
 import { ReviewsService } from './reviews.service';
-import { UserService } from 'src/users/users.service';
 @Controller('api/reviews')
 export class ReviewsController {
   constructor(
     private readonly reviewsService: ReviewsService,
-    private readonly usersService: UserService,
   ) {}
 
   @Post()

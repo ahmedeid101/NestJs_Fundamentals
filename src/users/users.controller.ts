@@ -3,26 +3,29 @@ import {
   Controller,
   Delete,
   Get,
-  NotFoundException,
   Param,
   Post,
   Put,
 } from '@nestjs/common';
-import { CreateUserDTO } from 'src/dtos/users-dto/create-user.dto';
+import { CreateUserDTO } from 'src/dtos/users-dto/register-user.dto';
 import { UpdateUserDTO } from 'src/dtos/users-dto/update-user.dto';
 import { UserService } from './users.service';
-import { ReviewsService } from 'src/reviews/reviews.service';
+import { LoginUserDTO } from 'src/dtos/users-dto/login-user.dto';
 
 @Controller('api/users')
 export class UsersController {
   constructor(
     private readonly userService: UserService,
-    private readonly reviewsService: ReviewsService,
   ) {}
 
-  @Post()
+  @Post('auth/register')
   public createNewUser(@Body() body: CreateUserDTO) {
-    return this.userService.create(body);
+    return this.userService.regester(body);
+  }
+
+  @Post('auth/login')
+  public loginUser(@Body() body: LoginUserDTO) {
+    return this.userService.login(body);
   }
 
   @Get()

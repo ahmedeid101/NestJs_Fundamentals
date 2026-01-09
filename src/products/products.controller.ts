@@ -2,11 +2,10 @@ import { Body, Controller, Get, Param, Post, NotFoundException, Put, Delete, Par
 import { CreateProductDTO } from "src/dtos/products-dto/create-product.dto";
 import { UpdateProductDTO } from "src/dtos/products-dto/update-product.dto";
 import { ProductService } from "./products.service";
-import { UserService } from "src/users/users.service";
 
 @Controller("api/products")
 export class ProductsController{
-    constructor(private readonly productService: ProductService, private readonly userService: UserService){};
+    constructor(private readonly productService: ProductService){};
 
     @Post()
     public createNewProduct(@Body() body: CreateProductDTO){

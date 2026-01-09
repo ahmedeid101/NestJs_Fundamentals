@@ -1,7 +1,6 @@
 import { forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { CreateReviewsDTO } from "src/dtos/reviews-dto/create-reviews.dto";
 import { UpdateReviewsDTO } from "src/dtos/reviews-dto/update-reviews.dto";
-import { UserService } from "src/users/users.service";
 import { Review } from "./review.entity";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
