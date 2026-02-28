@@ -1,0 +1,35 @@
+### Register New User
+POST http://localhost:3000/api/users/auth/register
+Content-Type: application/json
+
+{
+    "username": "Khaled",
+    "email": "khaled101@gmail.com",
+    "password": "Admin101##"
+}
+
+### Login User
+POST http://localhost:3000/api/users/auth/login
+Content-Type: application/json
+
+{
+    "email": "khaled101@gmail.com",
+    "password": "Admin101##"
+}
+
+### Get All Users
+GET http://localhost:3000/api/users
+
+### Get Single User
+GET http://localhost:3000/api/users/1
+
+### Update User
+PUT  http://localhost:3000/api/users/1
+Content-Type: application/json
+
+{
+    "name": "Aly"
+}
+
+### Delete User
+DELETE  http://localhost:3000/api/users/1
