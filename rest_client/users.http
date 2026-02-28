@@ -21,7 +21,11 @@ Content-Type: application/json
 GET http://localhost:3000/api/users
 
 ### Get Single User
+<<<<<<< HEAD
 GET http://localhost:3000/api/users/1
+=======
+GET http://localhost:3000/api/users/5
+>>>>>>> 7865a3cbcc341e810594fa6b0eea76a0abb6e635
 
 ### Update User
 PUT  http://localhost:3000/api/users/1

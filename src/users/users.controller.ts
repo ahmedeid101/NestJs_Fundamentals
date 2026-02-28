@@ -6,18 +6,24 @@ import {
   Param,
   Post,
   Put,
+<<<<<<< HEAD
   Req,
   UseGuards,
   UseInterceptors,
+=======
+>>>>>>> 7865a3cbcc341e810594fa6b0eea76a0abb6e635
 } from '@nestjs/common';
 import { CreateUserDTO } from 'src/dtos/users-dto/register-user.dto';
 import { UpdateUserDTO } from 'src/dtos/users-dto/update-user.dto';
 import { UserService } from './users.service';
 import { LoginUserDTO } from 'src/dtos/users-dto/login-user.dto';
+<<<<<<< HEAD
 import { LoggerInterceptor } from 'src/utils/Interceptors/logger.interceptor';
 import { AuthGuard } from './guards/auth.guard';
 import { CurrentUser } from './decorators/current-user.decorator';
 import type { JWTPayloadType } from 'src/utils/types';
+=======
+>>>>>>> 7865a3cbcc341e810594fa6b0eea76a0abb6e635
 
 @Controller('api/users')
 export class UsersController {
@@ -40,6 +46,7 @@ export class UsersController {
     return this.userService.getAll();
   }
 
+<<<<<<< HEAD
    @Get('currentUser')
   @UseGuards(AuthGuard)
   //@UseInterceptors(LoggerInterceptor)
@@ -51,6 +58,10 @@ export class UsersController {
   @UseInterceptors(LoggerInterceptor)
   public getSingleUser(@Param('id') id: number) {
     console.log("Get Single User Call");
+=======
+  @Get(':id')
+  public getSingleUser(@Param('id') id: number) {
+>>>>>>> 7865a3cbcc341e810594fa6b0eea76a0abb6e635
     return this.userService.getOne(id);
   }
 
