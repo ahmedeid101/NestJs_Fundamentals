@@ -23,10 +23,7 @@
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",
-<<<<<<< HEAD
     "@nestjs/jwt": "^11.0.2",
-=======
->>>>>>> 7865a3cbcc341e810594fa6b0eea76a0abb6e635
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/typeorm": "^11.0.0",
     "bcrypt": "^6.0.0",

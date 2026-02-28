@@ -3,6 +3,7 @@ import { Review } from "src/reviews/review.entity";
 import { CURRENT_TIMESTAMP } from "src/utils/constants";
 import { UserType } from "src/utils/enums";
 import { Column, CreateDateColumn, Entity, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Exclude } from "class-transformer";
 
 @Entity({name: 'users'})
 export class User{
@@ -15,6 +16,7 @@ export class User{
     @Column({type: 'varchar', length: '250', unique: true, nullable: true})
     email: string;
 
+    @Exclude()
     @Column({nullable: true})
     password: string;
 
