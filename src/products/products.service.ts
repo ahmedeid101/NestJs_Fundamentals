@@ -1,32 +1,46 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreateProductDTO } from "src/dtos/products-dto/create-product.dto";
 import { UpdateProductDTO } from "src/dtos/products-dto/update-product.dto";
-import { Repository } from "typeorm";
+import { Between, ILike, Like, Repository } from "typeorm";
 import { Product } from "./product.entity";
 import { InjectRepository } from "@nestjs/typeorm";
+import { UserService } from "src/users/users.service";
 
 
 @Injectable()
 export class ProductService {
     constructor(
         @InjectRepository(Product)
-        private readonly productRepository: Repository<Product>
+        private readonly productRepository: Repository<Product>,
+        private readonly userService: UserService
     ){}
 
     //Create New Product
-    public create( dto: CreateProductDTO) {
-        const newProduct = this.productRepository.create(dto);
+    public async create( dto: CreateProductDTO, userId: number) {
+        const user = await this.userService.getOne(userId);
+        const newProduct = this.productRepository.create({
+            ...dto,
+            title: dto.title.toLocaleLowerCase(),
+            user
+        });
         return this.productRepository.save(newProduct);
     }
 
     //Get All Products
-    public getAll() {
-        return this.productRepository.find();
+    public getAll(title?: string, minPrice?: number, maxPrice?: number) {
+        const filters = {
+            ...(title ? {title: ILike(`%${title}%`)} : {} ),
+            ...(minPrice !== undefined && maxPrice !== undefined
+                ? {price: Between(minPrice, maxPrice)} : {}
+            )
+        }
+        return this.productRepository.find({where: filters});
     }
+        
 
     //Get Single Product
     public async getOne(id: number) {
-        const product = await this.productRepository.findOne({where: {id}});
+        const product = await this.productRepository.findOne({where: {id}, relations: {user: true, reviews: true}});
         if (!product) throw new NotFoundException("product not found");
         return product;
     }

@@ -42,35 +42,3 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
   ]
 })
 export class AppModule {}
-
-// @Module({
-//   imports: [
-//     ConfigModule.forRoot({
-//       isGlobal: true,
-//       envFilePath: `.env.${process.env.NODE_ENV }`
-//     }), 
-
-//     TypeOrmModule.forRootAsync({
-//       inject: [ConfigService],
-//       useFactory: (config: ConfigService) => ({
-//         type: 'postgres',
-//         host: 'localhost',
-//         port: Number(config.get('DB_PORT')),
-//         username: config.get('DB_USERNAME'),
-//         password: String(config.get('DB_PASSWORD')),
-//         database: config.get('DB_DATABASE'),
-//         synchronize: true,
-//         entities: [__dirname + '/**/*.entity{.ts,.js}'],
-//       }),
-//     }),
-    
-//     ProductsModule, 
-//     ReviewsModule, 
-//     UsersModule,
-//   ]
-//   // exports: [],
-//   // controllers: [],
-//   // providers: [],
-// })
-
-// export class AppModule {}

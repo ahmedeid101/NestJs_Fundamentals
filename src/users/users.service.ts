@@ -1,15 +1,13 @@
-import {BadRequestException, ForbiddenException, Injectable, NotFoundException, UseGuards } from "@nestjs/common";
+import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CreateUserDTO } from "src/dtos/users-dto/register-user.dto";
 import { UpdateUserDTO } from "src/dtos/users-dto/update-user.dto";
 import { Repository } from "typeorm";
 import { User } from "./user.entity";
-import * as bcrypt from 'bcryptjs';
 import { LoginUserDTO } from "src/dtos/users-dto/login-user.dto";
 import { AccessTokenType, JWTPayloadType } from "src/utils/types";
-import { JwtService } from "@nestjs/jwt";
-import { ConfigService } from "@nestjs/config";
 import { UserType } from "src/utils/enums";
+import { AuthProvider } from "./auth.provider";
 
 
 @Injectable()
@@ -17,40 +15,17 @@ export class UserService {
     constructor(
         @InjectRepository(User)
         private readonly userRepository: Repository<User>,
-        private readonly jwtService: JwtService,
-        private readonly config: ConfigService
+        private readonly authProvider: AuthProvider
     ){}
 
-    //Register New User
     public async regester(registerDTO: CreateUserDTO): Promise<AccessTokenType>{
-        const {username, email, password} = registerDTO
-        const existUser = await this.userRepository.findOne({where: {email}});
-        if(existUser) throw new BadRequestException('User Already Exist');
-        const hashedPassword = await this.hashPassword(password);
-        let newUser = this.userRepository.create({
-            username,
-            email,
-            password: await bcrypt.hash(registerDTO.password, 10),
-        });
-        newUser =  await this.userRepository.save(newUser);
-
-        const accessToken = await this.generateJWT({id: newUser.id, userType: newUser.userType})
-        return {accessToken};
+        return this.authProvider.regester(registerDTO);
     }
 
-    //Login User
-    public async login(loginDto: LoginUserDTO): Promise<AccessTokenType>{
-        const {email, password} = loginDto;
-        const user = await this.userRepository.findOne({where: {email}});
-        if(!user) throw new BadRequestException("Invalid Email or Password");
+     public async login(loginDto: LoginUserDTO): Promise<AccessTokenType>{
+        return this.authProvider.login(loginDto);
+     }
 
-        const isPasswordMatch = await bcrypt.compare(password, user.password);
-        if(!isPasswordMatch) throw new BadRequestException("somthing wrong with password");
-
-        const accessToken = await this.generateJWT({id: user.id, userType: user.userType})
-        return {accessToken};
-
-    }
     //Get All User    
     public getAll() {
         return this.userRepository.find();
@@ -82,7 +57,7 @@ export class UserService {
         user.username = dto.username ?? user.username;
         user.email = dto.email ?? user.email;
         if(password){
-            user.password = await this.hashPassword(password)
+            user.password = await this.authProvider.hashPassword(password)
         }
         return this.userRepository.save(user);
     }
@@ -96,16 +71,4 @@ export class UserService {
         }
         throw new ForbiddenException("Access Denied: You Are Not Allowed To Delete This Account");
     }
-
-    //Generate Jwt Token
-    private generateJWT(payload: JWTPayloadType): Promise<string>{
-        return this.jwtService.signAsync(payload);
-    }
-
-    //Hashing Password
-    private async hashPassword(password: string): Promise<string>{
-        const salt = await bcrypt.genSalt(10);
-            return bcrypt.hash(password, salt);
-    }
-
 }

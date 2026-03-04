@@ -1,7 +1,7 @@
 ### Create Product
 POST http://localhost:3000/api/products
 Content-Type: application/json
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5cGUiOiJub3JtYWxfdXNlciIsImlhdCI6MTc3MjU0NjQ5NSwiZXhwIjoxNzcyNjMyODk1fQ.ryilgbmQeIpbT1bQRve0cI2mQ9SJWGfN_xuY41bIv0w
 {
     "title": "laptop",
     "description": "About this laptop",
