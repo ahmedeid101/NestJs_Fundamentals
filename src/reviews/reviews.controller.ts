@@ -9,8 +9,8 @@ import {
   UseGuards,
   ParseIntPipe,
 } from '@nestjs/common';
-import { CreateReviewsDTO } from 'src/dtos/reviews-dto/create-reviews.dto';
-import { UpdateReviewsDTO } from 'src/dtos/reviews-dto/update-reviews.dto';
+import { CreateReviewsDTO } from 'src/reviews/reviews-dto/create-reviews.dto';
+import { UpdateReviewsDTO } from 'src/reviews/reviews-dto/update-reviews.dto';
 import { ReviewsService } from './reviews.service';
 import { AuthRolesGuard } from 'src/users/guards/auth-role.guard';
 import { Roles } from 'src/users/decorators/user-role.decorator';

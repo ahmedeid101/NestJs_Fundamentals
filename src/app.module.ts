@@ -5,15 +5,15 @@ import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { UploadsModule } from './uploads/uploads.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: `.env.${process.env.NODE_ENV}`
+      envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
 
-  
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => {
@@ -30,15 +30,16 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
       },
     }),
 
-    ProductsModule, 
-    ReviewsModule, 
+    ProductsModule,
+    ReviewsModule,
     UsersModule,
+    UploadsModule,
   ],
   providers: [
     {
       provide: APP_INTERCEPTOR,
-      useClass: ClassSerializerInterceptor
-    }
-  ]
+      useClass: ClassSerializerInterceptor,
+    },
+  ],
 })
 export class AppModule {}

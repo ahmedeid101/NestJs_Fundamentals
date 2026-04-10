@@ -1,6 +1,6 @@
 import { ForbiddenException, forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
-import { CreateReviewsDTO } from "src/dtos/reviews-dto/create-reviews.dto";
-import { UpdateReviewsDTO } from "src/dtos/reviews-dto/update-reviews.dto";
+import { CreateReviewsDTO } from "src/reviews/reviews-dto/create-reviews.dto";
+import { UpdateReviewsDTO } from "src/reviews/reviews-dto/update-reviews.dto";
 import { Review } from "./review.entity";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
