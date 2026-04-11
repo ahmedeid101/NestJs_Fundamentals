@@ -26,8 +26,7 @@ import { ApiBody, ApiConsumes, ApiSecurity } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ImageUploadDto } from './users-dto/image-upload.dto';
 import type { Response } from 'express';
-import { extname, join } from 'path';
-import { diskStorage } from 'multer';
+import { join } from 'path';
 
 @Controller('api/users')
 export class UsersController {

@@ -8,7 +8,7 @@ import { diskStorage } from 'multer';
   imports: [
     MulterModule.register({
       storage: diskStorage({
-        destination: './images',
+        destination: './images/uploads',
         filename: (req, file, cb) => {
           const prefix = `${Date.now()}-${Math.round(Math.random() * 1000000)}`;
           const filename = `${prefix}-${file.originalname}`;

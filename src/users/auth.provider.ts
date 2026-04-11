@@ -8,6 +8,7 @@ import { CreateUserDTO } from 'src/users/users-dto/register-user.dto';
 import { AccessTokenType, JWTPayloadType } from 'src/utils/types';
 import { LoginUserDTO } from 'src/users/users-dto/login-user.dto';
 import * as bcrypt from 'bcryptjs';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class AuthProvider {
@@ -16,6 +17,7 @@ export class AuthProvider {
     private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
     private readonly config: ConfigService,
+    private readonly mailService: MailService,
   ) {}
 
   //Register New User
@@ -27,7 +29,7 @@ export class AuthProvider {
     let newUser = this.userRepository.create({
       username,
       email,
-      password: await bcrypt.hash(registerDTO.password, 10),
+      password: hashedPassword,
     });
     newUser = await this.userRepository.save(newUser);
 
@@ -52,6 +54,7 @@ export class AuthProvider {
       id: user.id,
       userType: user.userType,
     });
+    await this.mailService.sendMail(user.email);
     return { accessToken };
   }
 
