@@ -12,7 +12,11 @@ export class MailService {
         to: email,
         from: `<no-reply@yourdomain.com>`,
         subject: 'New Login Detected',
-        text: `A new login to your account was detected on ${today.toLocaleString()}. If this was not you, please secure your account immediately.`,
+        template: 'login',
+        context: {
+          email,
+          today,
+        },
       });
     } catch (error) {
       console.error('Error sending email:', error);

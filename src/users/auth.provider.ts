@@ -54,7 +54,11 @@ export class AuthProvider {
       id: user.id,
       userType: user.userType,
     });
-    await this.mailService.sendMail(user.email);
+    // Send email notification for new login
+    this.mailService.sendMail(user.email).catch((err) => {
+      console.error('Email failed:', err);
+    });
+    //await this.mailService.sendMail(user.email);
     return { accessToken };
   }
 
