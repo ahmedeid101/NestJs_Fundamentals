@@ -9,7 +9,7 @@ import { AccessTokenType, JWTPayloadType } from 'src/utils/types';
 import { LoginUserDTO } from 'src/users/users-dto/login-user.dto';
 import * as bcrypt from 'bcryptjs';
 import { MailService } from 'src/mail/mail.service';
-
+import { randomBytes } from 'node:crypto';
 @Injectable()
 export class AuthProvider {
   constructor(
@@ -21,7 +21,7 @@ export class AuthProvider {
   ) {}
 
   //Register New User
-  public async register(registerDTO: CreateUserDTO): Promise<AccessTokenType> {
+  public async register(registerDTO: CreateUserDTO) {
     const { username, email, password } = registerDTO;
     const existUser = await this.userRepository.findOne({ where: { email } });
     if (existUser) throw new BadRequestException('User Already Exist');
@@ -30,14 +30,20 @@ export class AuthProvider {
       username,
       email,
       password: hashedPassword,
+      verificationToken: randomBytes(32).toString('hex'),
     });
     newUser = await this.userRepository.save(newUser);
 
-    const accessToken = await this.generateJWT({
-      id: newUser.id,
-      userType: newUser.userType,
-    });
-    return { accessToken };
+    const link = `${this.config.get<string>('DOMAIN')}/api/users/verify-email/${newUser.id}/${newUser.verificationToken}`;
+    await this.mailService.sendVerifyEmail(email, link);
+    // const accessToken = await this.generateJWT({
+    //   id: newUser.id,
+    //   userType: newUser.userType,
+    // });
+    return {
+      message:
+        'Verification Token Is Sent to your Email, please verify your email address',
+    };
   }
 
   //Login User

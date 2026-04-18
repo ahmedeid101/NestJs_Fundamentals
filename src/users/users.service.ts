@@ -23,7 +23,7 @@ export class UserService {
     private readonly authProvider: AuthProvider,
   ) {}
 
-  public async register(registerDTO: CreateUserDTO): Promise<AccessTokenType> {
+  public async register(registerDTO: CreateUserDTO) {
     return this.authProvider.register(registerDTO);
   }
 
@@ -38,9 +38,6 @@ export class UserService {
       take: limit,
     });
   }
-  //   public getAll() {
-  //     return this.userRepository.find();
-  //   }
 
   //Get Single User
   public async getOne(id: number) {

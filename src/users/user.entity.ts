@@ -6,9 +6,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToMany,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
@@ -30,6 +28,9 @@ export class User {
 
   @Column({ type: 'enum', enum: UserType, default: UserType.NORMAL_USER })
   userType!: UserType;
+
+  @Column({ nullable: true })
+  verificationToken!: string;
 
   @Column({ default: false, nullable: true })
   isAccountVerified!: boolean;

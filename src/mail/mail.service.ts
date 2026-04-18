@@ -23,4 +23,19 @@ export class MailService {
       throw new RequestTimeoutException('Failed to send email');
     }
   }
+
+  public async sendVerifyEmail(email: string, link: string) {
+    try {
+      await this.mailerService.sendMail({
+        to: email,
+        from: `<no-reply@my-nestja-app.com>`,
+        subject: 'Verify Your Account',
+        template: 'verify-email',
+        context: { link },
+      });
+    } catch (error) {
+      console.error('Error sending email:', error);
+      throw new RequestTimeoutException('Failed to send email');
+    }
+  }
 }

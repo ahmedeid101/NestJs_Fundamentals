@@ -26,7 +26,7 @@ import { join } from 'path';
             socketTimeout: 5000,
           },
           template: {
-            dir: join(__dirname, 'templates'),
+            dir: join(process.cwd(), 'templates'),
             adapter: new EjsAdapter({
               inlineCssEnabled: true,
             }),
